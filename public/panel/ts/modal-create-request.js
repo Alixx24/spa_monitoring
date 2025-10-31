@@ -50,14 +50,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (form) {
         form.addEventListener('submit', function (e) { return __awaiter(void 0, void 0, void 0, function () {
             var formData, response, data, tbody, newRow, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         e.preventDefault(); // جلوگیری از رفرش شدن صفحه
                         formData = new FormData(form);
-                        _a.label = 1;
+                        _b.label = 1;
                     case 1:
-                        _a.trys.push([1, 4, , 5]);
+                        _b.trys.push([1, 4, , 5]);
                         return [4 /*yield*/, fetch(form.getAttribute('action') || '', {
                                 method: 'POST',
                                 headers: { 'X-CSRF-TOKEN': csrfToken },
@@ -65,10 +66,10 @@ document.addEventListener('DOMContentLoaded', function () {
                                 credentials: 'same-origin',
                             })];
                     case 2:
-                        response = _a.sent();
+                        response = _b.sent();
                         return [4 /*yield*/, response.json()];
                     case 3:
-                        data = _a.sent();
+                        data = _b.sent();
                         if (data.success && data.data) {
                             modal.style.display = 'none';
                             form.reset();
@@ -76,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             if (tbody) {
                                 newRow = document.createElement('tr');
                                 newRow.setAttribute('data-row-id', data.data.id);
-                                newRow.innerHTML = "\n                            <td>".concat(tbody.children.length + 1, "</td>\n                            <td>").concat(data.data.url, "</td>\n                            <td>").concat(data.data.email, "</td>\n                            <td>").concat(data.data.name, "</td>\n                            <td>").concat(data.data.duration, "</td>\n                            <td>").concat(data.data.created_at, "</td>\n                            <td>\n                                <button class=\"deleteBtn btn btn-danger\" data-id=\"").concat(data.data.id, "\">Delete</button>\n                            </td>\n                        ");
+                                newRow.innerHTML = "\n                            <td>".concat(tbody.children.length + 1, "</td>\n                            <td>").concat(data.data.url, "</td>\n                            <td>").concat(data.data.email, "</td>\n                            <td>").concat(data.data.name, "</td>\n                                <td>").concat(((_a = data.data.duration) === null || _a === void 0 ? void 0 : _a.duration) || 'ندارد', "</td>\n                            <td>").concat(data.data.created_at, "</td>\n                            <td>\n                                    <a href=\"/panel/requests/edit/").concat(data.data.id, "/\" class=\"btn btn-warning\">Edit</a>\n\n                                <button class=\"deleteBtn btn btn-danger\" data-id=\"").concat(data.data.id, "\">Delete</button>\n\n                            </td>\n                        ");
                                 tbody.appendChild(newRow);
                             }
                         }
@@ -86,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                         return [3 /*break*/, 5];
                     case 4:
-                        error_1 = _a.sent();
+                        error_1 = _b.sent();
                         console.error(error_1);
                         alert('⚠️ Something went wrong!');
                         return [3 /*break*/, 5];

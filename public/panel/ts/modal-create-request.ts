@@ -42,10 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             <td>${data.data.url}</td>
                             <td>${data.data.email}</td>
                             <td>${data.data.name}</td>
-                            <td>${data.data.duration}</td>
+                                <td>${data.data.duration?.duration || 'ندارد'}</td>
                             <td>${data.data.created_at}</td>
                             <td>
+                                    <a href="/panel/requests/edit/${data.data.id}/" class="btn btn-warning">Edit</a>
+
                                 <button class="deleteBtn btn btn-danger" data-id="${data.data.id}">Delete</button>
+
                             </td>
                         `;
                         tbody.appendChild(newRow);

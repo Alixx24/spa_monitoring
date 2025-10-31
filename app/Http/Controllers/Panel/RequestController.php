@@ -27,17 +27,17 @@ class RequestController extends Controller
         return view('panel.request.create', compact('fetchDuration'));
     }
 
-    public function store(RequestModelRequest $reqValid)
-    {
+public function store(RequestModelRequest $reqValid)
+{
+    $requestStore = $this->createRequest($reqValid);
 
-        $requestStore =  $this->createRequest($reqValid);
+    $requestStore->load('duration');
 
-
-        return response()->json([
-            'success' => true,
-            'data' => $requestStore
-        ]);
-    }
+    return response()->json([
+        'success' => true,
+        'data' => $requestStore
+    ]);
+}
 
 
     public function createRequest(RequestModelRequest $reqValid)
