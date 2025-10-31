@@ -11,10 +11,9 @@ class DurationController extends Controller
 {
   public function index()
 {
-    // گرفتن آخرین رکوردها به ترتیب ایجاد
     $fetchDuration = Duration::latest()->get();
 
-    // ارسال به view
+ 
     return view('panel.duration.index', compact('fetchDuration'));
 }
 
@@ -42,10 +41,10 @@ public function createRequest(DurationtModelRequest $reqValid)
 
     $result = Duration::create([
         'duration' => $validated['duration'],
-        'user_id' => $validated['user_id'] ?? auth()->id(), // بهتر است user_id فعلی باشد
+        'user_id' => $validated['user_id'] ?? auth()->id(), 
     ]);
 
-    return $result; // ← این خط اضافه شد
+    return $result; 
 }
    public function delete($id)
     {
@@ -64,7 +63,7 @@ public function createRequest(DurationtModelRequest $reqValid)
         return response()->json(['success' => false, 'message' => 'Failed to delete'], 500);
     }
 
-    // حذف واقعی مدل
+
     public function deleteAction(Duration $duration)
     {
         return $duration->delete();

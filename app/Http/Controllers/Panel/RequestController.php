@@ -11,44 +11,50 @@ use Illuminate\Http\Request;
 
 class RequestController extends Controller
 {
-public function index()
-{
-$fatchRequest = RequestModel::with('duration')->get();
+    public function index()
+    {
+        $fatchRequest = RequestModel::with('duration')->get();
+        $fetchDuration = Duration::all();
 
-    
-    return view('panel.request.index', compact('fatchRequest'));
-}
+
+        return view('panel.request.index', compact('fatchRequest', 'fetchDuration'));
+    }
 
     public function create()
     {
         $fetchDuration = Duration::all();
-     
-        return view('panel.request.create',compact('fetchDuration'));
+
+        return view('panel.request.create', compact('fetchDuration'));
     }
 
     public function store(RequestModelRequest $reqValid)
     {
-        
-        $this->createRequest($reqValid);
-        return redirect()->route('panel.request.index')->with('success', 'Request updated successfully');
+
+        $requestStore =  $this->createRequest($reqValid);
+
+
+        return response()->json([
+            'success' => true,
+            'data' => $requestStore
+        ]);
     }
 
 
-public function createRequest(RequestModelRequest $reqValid)
-{
-    $validated = $reqValid->validated();
+    public function createRequest(RequestModelRequest $reqValid)
+    {
+        $validated = $reqValid->validated();
 
-    $requestModel = RequestModel::create([
-        'url' => $validated['url'],
-        'name' => $validated['name'],
-        'email' => $validated['email'],
-        'duration_id' => $validated['duration_id'],
-        'status' => 'active',
-        'last_visited' => null,
-    ]);
+        $requestModel = RequestModel::create([
+            'url' => $validated['url'],
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'duration_id' => $validated['duration_id'],
+            'status' => 1,
+            'last_visited' => null,
+        ]);
 
-    return $requestModel;
-}
+        return $requestModel;
+    }
 
 
 
@@ -111,24 +117,19 @@ public function createRequest(RequestModelRequest $reqValid)
 
 
 
-public function storeTestJob()
-{
-    $requestModel = RequestModel::create([
-        'url' => 'http://127.0.0.1:8000/test-job',
-        'name' => 'test',
-        'email' => 'alimohammadi123450@gmail.com',
-        'duration' => 1,
-        'status' => 'active',
-        'last_visited' => null,
-    ]);
+    public function storeTestJob()
+    {
+        $requestModel = RequestModel::create([
+            'url' => 'http://127.0.0.1:8000/test-job',
+            'name' => 'test',
+            'email' => 'alimohammadi123450@gmail.com',
+            'duration' => 1,
+            'status' => 'active',
+            'last_visited' => null,
+        ]);
 
-    return $requestModel;
-}
+        return $requestModel;
+    }
 
-public function testJob()
-{
-  
-}
-
-
+    public function testJob() {}
 }
